@@ -1,11 +1,11 @@
 def add_global_node(dirt, name):
 
-	f1 = open(dirt + name + ".en.tok", "r")
-	f2 = open(dirt + name + ".en.deps", "r")
-	f3 = open(dirt + name + ".en.tokdeps", "r")
-	h1 = open(dirt + name + ".en.tok_gd", "w")
-	h2 = open(dirt + name + ".en.deps_gd", "w")
-	h3 = open(dirt + name + ".en.tokdeps_gd", "w")
+	f1 = open(dirt + name + ".tok", "r")
+	f2 = open(dirt + name + ".deps", "r")
+	f3 = open(dirt + name + ".tokdeps", "r")
+	h1 = open(dirt + name + ".tok_gd", "w")
+	h2 = open(dirt + name + ".deps_gd", "w")
+	h3 = open(dirt + name + ".tokdeps_gd", "w")
 	index_list = []
 	node = "gnode"
 	for line in f1:
@@ -57,14 +57,18 @@ def dep_to_levi(dirt, name, Sequential=False):
 		file_1 = "dev/newstest2015-encs-src.tok.en"
 		file_2 = "dev/newstest2015-encs-src.deprels.en"
 		file_3 = "dev/newstest2015-encs-src.heads.en"
+	else:
+		file_1 = dirt + name + ".toks"
+		file_2 = dirt + name + ".deprels"
+		file_3 = dirt + name + ".heads"
 
-	file_4 = dirt + name + ".en.tok"
-	file_5 = dirt + name + ".en.deps"
+	file_4 = dirt + name + ".tok"
+	file_5 = dirt + name + ".deps"
 	f1 = open(file_1, "r")
 	f2 = open(file_2, "r")
 	f3 = open(file_3, "r")
-	h1 = open(file_4, "w")
-	h2 = open(file_5, "w")
+	h1 = open(file_4, "w+")
+	h2 = open(file_5, "w+")
 
 	tok_list = []
 	dep_list = []
@@ -126,12 +130,12 @@ def dep_to_levi(dirt, name, Sequential=False):
 
 def gen_tokdeps(dirt, name):
 
-	file_4 = dirt + name + ".en.tok"
-	file_5 = dirt + name + ".en.deps"
-	file_6 = dirt + name + ".en.tokdeps"
+	file_4 = dirt + name + ".tok"
+	file_5 = dirt + name + ".deps"
+	file_6 = dirt + name + ".tokdeps"
 	h4 = open(file_4, "r")
 	h5 = open(file_5, "r")
-	h6 = open(file_6, "w")
+	h6 = open(file_6, "w+")
 	toks = []
 	deps = []
 	for line in h4:
@@ -157,11 +161,12 @@ def gen_tokdeps(dirt, name):
 if __name__ == '__main__':
 	add_global = True
 	Sequential = True
-	name_list = ["train", "test", "val"]
-	dirt = "en2cs/"
+	#name_list = ["train", "test", "val"]
+	name_list = ["en_particle_v2.en"]
+	dirt = "data/"
 	for name in name_list:
 		dep_to_levi(dirt, name, Sequential)
-		if name != "train":
+		if name != "nnew_train.en":
 			gen_tokdeps(dirt, name)
 		if add_global:
 			add_global_node(dirt, name)
